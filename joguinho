@@ -1,0 +1,84 @@
+import pyautogui 
+import pyperclip 
+import time
+
+pyautogui.PAUSE = 0.55
+#abrir o google 
+pyautogui.press("winleft")
+pyautogui.write("chrome")
+pyautogui.press("enter")
+time.sleep(5)
+#abrir o jogo 
+link = "https://guitarflash.com/?lg=pt"
+pyperclip.copy(link)
+pyautogui.hotkey("ctrl","v")
+pyautogui.press("enter")
+time.sleep(20)
+#escolher a musica certa 
+#essa parte pode dar errado caso a resolução da tela for maior ou a pagina estar com zoom 
+pyautogui.click(451,391)
+time.sleep(5)
+pyautogui.click(847,572)
+pyautogui.write("in the end")
+time.sleep(3)
+pyautogui.click(504,608, clicks=2)
+time.sleep(30)
+
+#jogando a musica 
+#essa parte pode variar de varios jeitos 
+time.sleep(5)
+pyautogui.press("enter")
+time.sleep(10)
+pyautogui.click(80,54)
+time.sleep(5)
+pyautogui.click(451,391)
+time.sleep(5)
+pyautogui.click(847,572)
+pyautogui.write("in the ")
+time.sleep(3)
+pyautogui.click(504,608, clicks=2)
+time.sleep(30)
+pyautogui.press("enter")
+#compasso 1 
+time.sleep(6.5)
+pyautogui.press("a")
+pyautogui.press("j")
+pyautogui.press("j")
+pyautogui.press("s")
+
+#compasso 2 
+pyautogui.press("a")
+pyautogui.press("a")
+pyautogui.press("a")
+pyautogui.press("a")
+
+
+#compasso 1
+pyautogui.press("a")
+pyautogui.press("j")
+pyautogui.press("j")
+pyautogui.press("s")
+#compasso 2 
+pyautogui.press("a")
+pyautogui.press("a")
+pyautogui.press("a")
+pyautogui.press("a")
+
+#compasso 1
+pyautogui.press("a")
+pyautogui.press("j")
+pyautogui.press("j")
+pyautogui.press("s")
+#compasso 2 
+pyautogui.press("a")
+pyautogui.press("a")
+pyautogui.press("a")
+pyautogui.press("a")
+
+#compasso 3
+pyautogui.press("a")
+pyautogui.press("j")
+pyautogui.press("j")
+pyautogui.press("s")
+pyautogui.press("a")
+
