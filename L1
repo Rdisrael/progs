@@ -1,0 +1,72 @@
+import math 
+import numpy as np
+import matplotlib.pyplot as plt
+
+#primeira questão da lista 1 de computação para automação
+
+h1=0.50#passo
+h2=0.25
+y0=1 #valor inicial de y, que por sinal já conhecemos 
+t0=0 #valor inicial do tempo 
+tf=2 #tempo final para que é necessario calcular 
+t02=t0 #valor do tempo da outra função 
+y02=y0
+
+n1=tf/h1#quantos intervalos eu  tenho 
+n2=tf/h2
+
+#EDO
+def f(t,y):
+    return y*t**3-1.5*y
+
+#vetores 
+ti=[t0]
+ti2=[t02]
+yi=[y0]
+yi2=[y02]
+
+n1=int(n1)
+n2=int(n2)
+
+for k in range(n1):
+    t0=t0+h1
+    ti.append(t0)
+    
+    yk=y0+(h1*f(t0,y0))
+    yi.append(yk)
+    #print(f"y{k+1}= {yk}")
+    y0=yk
+
+for l in range(n2):
+    t02=t02+h2
+    ti2.append(t02)
+    
+    yk2=y02+(h2*f(t02,y02))
+    yi2.append(yk2)
+    #print(f"yy{l+1}= {yk2}")
+    y02=yk2
+    
+#função real 
+t1=np.arange(0,t0+1,0.00001)
+
+#grafico h=0,25
+fig,axe= plt.subplots()
+axe.set_xlabel("Tempo")
+axe.set_ylabel("Y")
+axe.set_ylim([0,2.5])
+axe.set_xlim([0,2])
+plt.plot(ti2,yi2,color="red",label="h=0,25")    
+plt.plot(t1,math.e**(0.25*t1**4-1.5*t1), label="real")
+plt.legend()
+plt.show()
+
+#grafico h=0,5
+fig,axe= plt.subplots()
+axe.set_xlabel("Tempo")
+axe.set_ylabel("Y")
+axe.set_ylim([0,2.5])
+axe.set_xlim([0,2])   
+plt.plot(ti,yi,color="green",label="h=0,5")
+plt.plot(t1,math.e**(0.25*t1**4-1.5*t1), label="real")
+plt.legend()
+plt.show()
