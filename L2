@@ -1,0 +1,111 @@
+#Lista 2 de Computação para automação, Runge Kutta 2 e 4
+#Questão 1
+import math 
+import numpy as np
+import matplotlib.pyplot as plt
+#informações iniciais 
+x0=0 #tempo inicial 
+y0=1 #y(0)
+xf=2 #tempo final
+
+#h=0,5
+h=0.5 #passo
+n=(xf-x0)/h #divisões 
+n=int(n)
+
+#h=0,25
+h2=0.25
+y02=y0
+x02=x0
+n2=(xf-x0)/h2
+n2=int(n2)
+
+#vetores usados para plotar nos gráficos
+xi=[x0]  
+xi2=[x02]  
+yi=[y0]
+yi2=[y02]
+
+#EDO do exercicio
+def func1(x,y):
+    return y*x**3-1.5*y
+
+#runge kutta 2 para h=0.5
+for k in range(n):
+    f1=func1(x0,y0)
+    f2=func1(x0+h,y0+h*f1)
+    yk=y0+(h*0.5)*(f1+f2)
+    x0=x0+h
+    y0=yk
+    xi.append(x0)
+    yi.append(yk)
+
+#runge kutta 2 para h=0.25
+for l in range(n2):
+    f12=func1(x02,y02)
+    f22=func1(x02+h2,y02+h2*f12)
+    yk2=y02+(h2*0.5)*(f12+f22)
+    x02=x02+h2
+    y02=yk2
+    xi2.append(x02)
+    yi2.append(yk2)
+#grafico 
+fig,axe= plt.subplots()
+axe.set_xlabel("Tempo")
+axe.set_ylabel("Y")
+axe.set_ylim([0,2.5])
+axe.set_xlim([0,2])   
+plt.plot(xi,yi,color="green",label="h=0,5")
+plt.plot(xi2,yi2,color="red",label="h=0,25")
+plt.title("Exercício 1 Runge Kutta 2")
+plt.grid()
+plt.legend()
+plt.show() 
+
+#runge kutta 4 para h=0.5, há novamente a definição dos valores de x0 e y0
+#assim como a criação de novos vetores
+x0=0
+xi3=[x0]
+y0=1
+yi3=[y0]
+
+#metodo runge kutta ordem 4
+for s in range(n):
+    k1=h*(func1(x0,y0))
+    k2=h*(func1(x0+(h/2),y0+(k1/2)))
+    k3=h*(func1(x0+(h/2),y0+(k2/2)))
+    k4=func1(x0+h,y0+k3)
+    yk3=y0+(k1+2*k2+2*k3+k4)/6
+    x0=x0+h
+    xi3.append(x0)
+    yi3.append(yk3)
+    y0=yk3
+    
+#runge kutta 4 para h2=0.25
+x02=0
+xi4=[x02]
+y02=1
+yi4=[y02]
+
+for s in range(n2):
+    k1=h2*(func1(x02,y02))
+    k2=h2*(func1(x02+(h2/2),y02+(k1/2)))
+    k3=h2*(func1(x02+(h2/2),y02+(k2/2)))
+    k4=func1(x02+h2,y02+k3)
+    yk3=y02+(k1+2*k2+2*k3+k4)/6
+    x02=x02+h2
+    xi4.append(x02)
+    yi4.append(yk3)
+    y02=yk3    
+#grafico 
+fig,axe= plt.subplots()
+axe.set_xlabel("Tempo")
+axe.set_ylabel("Y")
+axe.set_ylim([0,2.5])
+axe.set_xlim([0,2])   
+plt.plot(xi3,yi3,color="green",label="h=0,5")
+plt.plot(xi4,yi4,color="red",label="h=0,25")
+plt.title("Exercício 1 Runge Kutta 4")
+plt.grid()
+plt.legend()
+plt.show() 
