@@ -1,0 +1,59 @@
+import math 
+import numpy as np
+import matplotlib.pyplot as plt
+
+def n(n):
+    y0=1 #valor inicial de y, que por sinal já conhecemos 
+    yf=2.72
+    t0=0 #valor inicial do tempo 
+    tf=2 #tempo final para que é necessario calcular 
+    n=10
+    h=(tf-t0)/(n-1)
+
+    #EDO
+    def f(t,y):
+        return y*t**3-1.5*y
+
+
+    x=np.linspace(t0,tf,n)
+    A=np.zeros([n, n])
+    b=np.zeros([n])
+    y=np.zeros([n])
+
+    #matriz A
+    A[0,0]=1
+    for k in range(1,n-1):
+        A[k,k-1]=-1
+        A[k,k+1]=1
+    A[-1,-1]=1
+
+    #Matriz B
+    b[0]=y0
+    b[n-1]=yf
+    
+
+    for j in range(0,15):
+        for l in range(1,n-1):
+            b[l] = 2*h*y[l]*(x[l]**3-1.5)      
+        y = np.matmul(np.linalg.inv(A), b)
+
+    #print(y)
+    y = np.matmul(np.linalg.inv(A), b)
+    print("y=",y)
+    #print("y=",y)
+
+    #função real 
+    t1=np.arange(0,t0+2,0.00001)
+
+    #graficos 
+    fig,axe= plt.subplots()
+    axe.set_xlabel("Tempo")
+    axe.set_ylabel("Y")
+    axe.set_ylim([-1.5,3])
+    axe.set_xlim([0,3])   
+    plt.plot(x,y,color="red",label="metodo")
+    plt.plot(t1,math.e**(0.25*t1**4-1.5*t1), label="real")
+    plt.grid()
+    plt.legend()
+    plt.show()
+n(10)
