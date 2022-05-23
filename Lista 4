@@ -1,0 +1,64 @@
+import math 
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+#Discretização Bidimensional, método de Euler explicito
+def n(n,S):
+    Cx=1 #comprimento em x(m)
+    Cy=1 #comprimento em y 
+    alpha=0.0155 #m²/s
+    Ti=25 #°C
+    TS=100 #temperatura superior
+    Tin=20 #temperatura inferior
+    Tb=30 #temperatura bordas 
+    x0=0 #tempo inicial em segundos
+    xf=20 #tempo final 
+    
+    h=(xf-x0)/(n-1)
+    h=int(h)
+    deltax=Cx/n
+    deltay=Cy/n
+    deltat=S/(alpha*1/deltax**2+1/deltay**2)
+    x=np.linspace(0,Cx,n)
+    y=x
+   
+    #Matriz da temperatura da placa 
+    T=np.ones([n,n])*Ti 
+
+    for i in range(0,n-2):
+        T[i+1,0]=Tb
+        T[i+1,n-1]=Tb
+        T[n-1,i+1]=TS
+        T[0,i+1]=Tin
+    #print(T)
+    #T[0,0]=0
+    #T[0,n-1]=0
+    #T[n-1,0]=0
+    #T[n-1,n-1]=0
+    while x0<=xf:
+        T0=T
+        for k in range(1,n-1):
+            for j in range(1,n-1):
+                T[k,j]=T0[k,j]+deltat*alpha*(((T0[k-1,j]-2*T0[k,j]+T0[k+1,j])/deltax**2)+((T0[k,j-1]-2*T0[k,j]+T0[k,j+1])/deltay**2))
+        x0=x0+deltat
+
+    Table=pd.DataFrame(T)
+    #print(Table)
+    Table=Table.reindex([30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0])
+    print(Table)
+    
+    #graficos 
+    fig,axe= plt.subplots()
+    axe.set_title("Distribuição da temperatutra na chapa")
+    axe.set_xlabel("x(m)")
+    axe.set_ylabel("y(m)")
+    axe.set_ylim([0,1])
+    axe.set_xlim([0,1])   
+    CS=plt.contour(x,y,T,9)
+    axe.clabel(CS, inline=2, fontsize=10)
+    CB = fig.colorbar(CS, shrink=0.8)
+    plt.show()
+n(6,1/20)
+n(11,1/20)
+n(11,1/2)
+n(31,1/2)
